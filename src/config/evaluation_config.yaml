@@ -1,0 +1,34 @@
+language: arabic
+metrics:
+  retrieval_metrics:
+    - precision
+    - recall
+    - mrr
+  generation_metrics:
+    - bleu
+    - rouge
+    - faithfulness
+  arabic_metrics:
+    - similarity
+    - coherence
+
+model:
+  sentence_transformer: "Omartificial-Intelligence-Space/Arabic-MiniLM-L12-v2-all-nli-triplet"
+  batch_size: 32
+  max_length: 512
+
+output_dir: "evaluation_output"
+num_workers: 4
+device: "cuda"
+
+preprocessing:
+  normalize_unicode: true
+  remove_diacritics: true
+  remove_extra_spaces: true
+
+reporting:
+  generate_plots: true
+  interactive_visualizations: true
+  export_format:
+    - html
+    - pdf

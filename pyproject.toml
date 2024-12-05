@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "moqayyem"
+version = "0.1.0"
+description = "Evaluation framework for RAG application"
+authors = ["Omaralsaabi <prof.omaralsaabi@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+pyyaml = "6.0.2"
+pandas = "2.2.3"
+scikit-learn = "1.5.2"
+transformers = ">=4.0,<4.44.0"
+nltk = "3.9.1"
+rouge-score = "0.1.2"
+torch = "2.5.1"
+matplotlib = "3.9.3"
+seaborn = "0.13.2"
+camel-tools = "1.5.5"
+arabic-reshaper = "3.0.0"
+python-bidi = "0.6.3"
+plotly = "5.24.1"
+sentence-transformers = "3.3.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
