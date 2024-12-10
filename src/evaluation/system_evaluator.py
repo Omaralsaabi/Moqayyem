@@ -7,9 +7,13 @@ import numpy as np
 
 from src.config.config import EvaluationConfig
 from src.data.dataset import RAGDataset
-from src.metrics.arabic_metrics import ArabicMetrics
-from src.metrics.generation_metrics import GenerationMetrics
-from src.metrics.retrieval_metrics import RetrievalMetrics
+from src.metrics import (
+    ArabicMetrics,
+    GenerationMetrics,
+    PerformanceMetrics,
+    RetrievalMetrics,
+    RobustnessMetrics,
+)
 
 
 class RAGEvaluator:
@@ -23,6 +27,8 @@ class RAGEvaluator:
         self.retrieval_metrics = RetrievalMetrics()
         self.generation_metrics = GenerationMetrics()
         self.arabic_metrics = ArabicMetrics()
+        self.robustness_metrics = RobustnessMetrics()
+        self.performance_metrics = PerformanceMetrics()
 
     def evaluate_example(
         self,
@@ -31,12 +37,42 @@ class RAGEvaluator:
         generated_response: str,
         ground_truth: Optional[str] = None,
         relevant_docs: Optional[List[str]] = None,
+        noisy_docs: bool = False,
+        measure_performance: bool = False,
     ) -> Dict:
         """
         Evaluate a single RAG example.
         """
         try:
-            results = {"query": query, "metrics": {"retrieval": {}, "generation": {}}}
+            results = {
+                "query": query,
+                "metrics": {
+                    "retrieval": {},
+                    "generation": {},
+                    "robustness": {},
+                    "performance": {},
+                },
+            }
+
+            if measure_performance:
+                start_time = getattr(retrieved_docs, "retrieval_time", None)
+                end_time = getattr(generated_response, "generation_time", None)
+                if start_time and end_time:
+                    perf_metrics = {
+                        "retrieval_latency": start_time,
+                        "generation_latency": end_time,
+                        "total_latency": start_time + end_time,
+                    }
+                    results["metrics"]["performance"].update(perf_metrics)
+
+            if noisy_docs:
+                robustness_scores = self.robustness_metrics.evaluate_noise_robustness(
+                    clean_docs=retrieved_docs,
+                    noisy_docs=noisy_docs,
+                    query=query,
+                    generated_response=generated_response,
+                )
+                results["metrics"]["robustness"].update(robustness_scores)
 
             # Evaluate retrieval if relevant docs are provided
             if retrieved_docs:
