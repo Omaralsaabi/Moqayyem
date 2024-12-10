@@ -1,23 +1,8 @@
 import logging
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Dict, List, Optional, Union
-
-import pandas as pd
+from typing import List, Optional, Union
 
 from .data_loader import BaseDataLoader, DataLoaderFactory
-
-
-@dataclass
-class RAGExample:
-    """Single example for RAG evaluation"""
-
-    query: str
-    retrieved_docs: List[str]
-    generated_response: str
-    ground_truth: Optional[str] = None
-    doc_score: Optional[List[float]] = None
-    metadata: Optional[Dict] = None
+from .types import RAGExample
 
 
 class RAGDataset:

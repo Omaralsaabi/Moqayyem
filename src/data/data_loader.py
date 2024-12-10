@@ -2,12 +2,12 @@ import json
 import logging
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import List, Optional
 
 import pandas as pd
 import yaml
 
-from .dataset import RAGExample
+from .types import RAGExample
 
 
 class BaseDataLoader(ABC):
