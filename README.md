@@ -170,7 +170,7 @@ This project is licensed under the Apache License - see the LICENSE file for det
 
 - [CAMeL Tools](https://github.com/CAMeL-Lab/camel_tools) for Arabic NLP utilities
 - [sentence-transformers](https://github.com/UKPLab/sentence-transformers) for semantic similarity
-- [Omartificial-Intelligence-Space](https://huggingface.co/Omartificial-Intelligence-Space)
+- [Omartificial-Intelligence-Space](https://huggingface.co/Omartificial-Intelligence-Space) for semantic model
 
 
 ## Citation
